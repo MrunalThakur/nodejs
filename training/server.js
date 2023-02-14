@@ -1,0 +1,69 @@
+const http = require('http');    //require is like import in python
+const fs = require('fs');
+const { parse } = require('path');
+
+/*
+
+//the requestListner takes incomingMessage and serverResponse
+function requestListner(req,res){
+
+}
+
+//createServer takes a requestListner as an argument that executes a function for each response it receives
+http.createServer(requestListner); 
+
+
+*There's a shorter way to write this using anonymous functions
+
+http.createServer(function(req,res){
+    
+});
+*or an even shorter way to use arrow function without the "function" keyword
+
+*/
+
+const server = http.createServer((req,res) => {
+   //console.log(req.url, req.method, req.headers);
+   //process.exit(); //quits the server. shouldn't be used in actual server code
+    let url = req.url;
+    let method = req.method;
+    if(url === '/'){
+        res.setHeader('Content-Type','text/html');
+        res.write('<html>');
+        res.write('<head><title> This is so weird</title></head>');
+        res.write('<body><form action="/message" method="POST"><input type="text" name="AtextBoxData"><button>Submit</button></form></body>');
+        res.write('</html>');
+        return res.end();
+
+    }
+    if(url === '/message' && method === 'POST'){
+        const body = [];
+        req.on('data',(dataChunk) => {
+            console.log(dataChunk);
+            body.push(dataChunk);
+        }); 
+        req.on('end',()=>{
+            const parseBody = Buffer.concat(body).toString();
+            console.log(parseBody);
+        });
+        fs.writeFileSync('responseFile.text','Dummy Data');
+        //res.writeHead(302,{}) //{} has headers
+        //easier to read if written on separate lines
+        res.statusCode = 302; //302 - redirect
+        //Location is default header accepted by js
+        res.setHeader('Location','/'); 
+        return res.end();
+    }
+
+    res.setHeader('Content-Type','text/html');
+    res.write('<html>');
+    res.write('<head><title> This is so weird</title></head>');
+    res.write('<body><h1>So damn Weird</h1></body>');
+    res.write('</html>');
+    res.end(); //cannot write res.write after res.end
+});
+
+server.listen(1433); //1433 port
+
+//better way of writing response is using the Express.js framework
+//this is just to understand the internal working
