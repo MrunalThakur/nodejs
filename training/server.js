@@ -41,8 +41,10 @@ const server = http.createServer((req,res) => {
         //on method is creates a listener
         //'data' is the event we're listening to
         req.on('data',(dataChunk) => { 
+            //let txt = dataChunk.toString();
             console.log(dataChunk);
             body.push(dataChunk);
+            
         }); 
         //'end' listener fires when all incoming data is parsed
         req.on('end',()=>{
