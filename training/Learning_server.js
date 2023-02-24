@@ -38,7 +38,7 @@ const server = http.createServer((req,res) => {
     }
     if(url === '/message' && method === 'POST'){
         const body = [];
-        //on method is creates a listener
+        //on method creates a listener
         //'data' is the event we're listening to
         req.on('data',(dataChunk) => { 
             //let txt = dataChunk.toString();
