@@ -33,8 +33,7 @@ const requestHandler = (req, res) => {
                     console.log(err);
             });
             res.setHeader('Location','/'); 
-            return res.end();      
-            
+            return res.end();        
         });
     }
     res.setHeader('Content-Type','text/html');
@@ -63,5 +62,5 @@ const requestHandler = (req, res) => {
 
 module.exports = {
     handler: requestHandler,
-    text: 'this is just a string'
+    text: 'Server running'
 };
