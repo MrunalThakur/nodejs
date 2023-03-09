@@ -5,12 +5,14 @@ const express = require('express');
 // express imports express() as a function therefore following statement
 const app = express(); 
 
-app.use((req,res,next) => {
-    console.log("this is middleware");
-    next(); //allows the net middleware to execute (the one below)
+app.use('/newPage',(req,res,next) => {
+    console.log("this is newPage middleware");
+    //next(); //allows the net middleware to execute (the one below)
     //call next when you don't send a response
+    res.send("<h1>New page middleware</h1>");
+    next();
 });
-app.use((req,res,next) => {
+app.use('/',(req,res,next) => {
     console.log("next");
     // res.send sends response
     res.send("<h1> expressJS course<h1>")
