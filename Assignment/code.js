@@ -1,0 +1,3 @@
+//create nodejs application using expressjs to add update list and delete users stored in json file
+
+//Create a Node.js application with the following endpoints: POST /myapp/user/add - to add a new user.  PUT /myapp/user/update - to update an existing user. GET /myapp/user - to list all users. GET /myapp/user/{id} - to get a particular user by id.  DELETE /myapp/user/{id} - to delete a user by id. Use a JSON file to store user data.
