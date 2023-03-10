@@ -17,7 +17,7 @@ fs.readFile(('./userData.json'),(err,data)=>{
     }
     else {
         userData = JSON.parse(data);
-        console.log(typeof userData.user);
+        console.log(userData.user);
     }
 });
 app.post('/myapp/user/add',(req,res)=>{
@@ -41,14 +41,23 @@ app.post('/myapp/user/add',(req,res)=>{
 
 app.put('/myapp/user/update/:id',(req,res)=>{
     // console.log('File exists');
-    const id = req.params.id;
-    const updatedUserData = req.body;
-    const index = (userData.findIndex((user) => {
-        return user.id ===id;
-    }));
-    userData[index] = updatedUserData;
-    fs.writeFile('./userData.json',JSON.stringify(userData));
-    res.send({message: 'User updated', data: updatedUserData});
+    const id = req.params.id.split(':')[1].toString().replace(/["]+/g,'');
+    let index = userData.user.findIndex((item)=>{return item.id == id});
+    // console.log("index"+index);
+    if(index > -1){
+        userData.user[index].name = req.body.name;
+        userData.user[index].id = req.body.id;
+        const dataString = JSON.stringify(userData);
+        fs.writeFile('./userData.json',dataString,(err)=>{
+            if(err){
+                throw err;
+            }
+        });
+        res.send({message: 'User updated', data: userData.user[index]});
+    }
+    else{
+        res.send({message: "UserID not found"});
+    }
 });
 
 app.get('/myapp/user/display',(req,res)=>{
