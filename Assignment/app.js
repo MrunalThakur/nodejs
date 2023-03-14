@@ -54,10 +54,10 @@ app.put('/myapp/user/update/:id',(req,res)=>{
                 throw err;
             }
         });
-        res.send({message: 'User updated', data: userData.user[index]});
+        res.status(200).send({message: 'User updated', data: userData.user[index]});
     }
     else{
-        res.send({message: "UserID not found"});
+        res.status(200).send({message: "UserID not found"});
     }
 });
 
